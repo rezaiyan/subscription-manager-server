@@ -19,6 +19,15 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Create .env file from GitHub Secrets
+        run: |
+          echo "DATABASE_NAME=${{ secrets.DATABASE_NAME }}" >> .env
+          echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> .env
+          echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> .env
+          echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
+          echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
+        shell: bash
+
       - name: Make run.sh Executable
         run: chmod +x run.sh
 
