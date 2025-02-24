@@ -1,4 +1,3 @@
-```md
 # Subscription Manager Backend 🚀
 
 This is the backend service for the **Subscription Manager** application, built using **Spring Boot, Kotlin, and JPA**.  
