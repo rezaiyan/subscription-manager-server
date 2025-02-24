@@ -1,15 +1,12 @@
 package com.alirezaiyan.subscriptionmanager.controller
 
+import com.alirezaiyan.subscriptionmanager.config.GoogleAuthConfig
 import com.alirezaiyan.subscriptionmanager.security.AuthenticatedUser
 import com.alirezaiyan.subscriptionmanager.model.dto.ApiResponse
 import com.alirezaiyan.subscriptionmanager.model.dto.ErrorResponse
 import com.alirezaiyan.subscriptionmanager.model.dto.SuccessResponse
 import com.alirezaiyan.subscriptionmanager.model.entity.User
 import com.alirezaiyan.subscriptionmanager.repository.UserRepository
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier
-import com.google.api.client.http.javanet.NetHttpTransport
-import com.google.api.client.json.JsonFactory
-import com.google.api.client.json.gson.GsonFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -19,9 +16,9 @@ import java.util.*
 @RestController
 @RequestMapping("/auth")
 class AuthController(
+    private val googleAuthConfig: GoogleAuthConfig,
     private val userRepository: UserRepository
 ) {
-    private val jsonFactory: JsonFactory = GsonFactory.getDefaultInstance()
 
     @GetMapping("/user")
     fun getUser(@AuthenticationPrincipal user: AuthenticatedUser): ResponseEntity<ApiResponse<Map<String, Any>>> {
@@ -42,11 +39,7 @@ class AuthController(
             val rawToken = idTokenString.trim()
             val cleanedToken = rawToken.removeSurrounding("\"")
 
-            val verifier = GoogleIdTokenVerifier.Builder(NetHttpTransport(), jsonFactory)
-                .setAudience(listOf("269921399907-84opfong0qurlhct21mo9ec06k2df2qr.apps.googleusercontent.com"))
-                .build()
-
-            val idToken = verifier.verify(cleanedToken)
+            val idToken = googleAuthConfig.googleIdTokenVerifier().verify(cleanedToken)
             return if (idToken != null) {
                 val payload = idToken.payload
                 val email = payload.email
