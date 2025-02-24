@@ -24,7 +24,7 @@ fi
 
 # Run Docker Compose
 echo "🚀 Starting Docker Build & Containers..."
-if docker-compose up --build; then
+if docker compose up --build; then
     echo "✅ Docker containers are running!"
 else
     echo "❌ Docker build failed! Check logs above."
