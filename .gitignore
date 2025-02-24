@@ -1,0 +1,83 @@
+# Ignore Gradle files
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Ignore generated files in src/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Ignore Eclipse/STS/IDEA project files
+HELP.md
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+# Ignore IntelliJ IDEA settings
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+# Ignore NetBeans files
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore Kotlin build and caches
+.kotlin/
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore Logs and temporary files
+logs/
+*.log
+nohup.out
+
+# Ignore dependency caches (for Gradle)
+**/build/libs/
+**/build/tmp/
+**/build/reports/
+**/build/generated/
+
+# Ignore Spring Boot-specific files
+*.war
+*.jar
+*.class
+BOOT-INF/
+META-INF/
+module-info.class
+
+# Ignore environment files
+.env
+.env.local
+.env.*.local
+
+# Ignore Docker artifacts
+docker-compose.override.yml
+*.dockerfile
+*.dockerenv
+
+# Ignore Kubernetes manifests (if using K8s)
+k8s/
+
+# Ignore CI/CD artifacts
+.github/workflows/*.log
+*.cache
+node_modules/
