@@ -1,14 +1,13 @@
-name: Subscription Manager CI/CD
+name: Deploy to Render
 
 on:
   push:
     branches:
-      - main
+      - main  # Change this to your deployment branch if needed
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -19,16 +18,18 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Create .env file from GitHub Secrets
+      - name: Build JAR
+        run: ./gradlew clean build
+
+      - name: Run Tests
+        run: ./gradlew test
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-test  # Deploys only if tests pass
+    steps:
+      - name: Trigger Render Deployment
         run: |
-          echo "DATABASE_NAME=${{ secrets.DATABASE_NAME }}" >> .env
-          echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> .env
-          echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> .env
-          echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
-          echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
-
-      - name: Make Scripts Executable
-        run: chmod +x build_and_test.sh deploy_and_run.sh
-
-      - name: Run Build & Test
-        run: ./build_and_test.sh
+          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys" \
+          -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+          -H "Content-Type: application/json"
