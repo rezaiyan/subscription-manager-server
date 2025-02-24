@@ -1,7 +1,6 @@
 package com.alirezaiyan.subscriptionmanager.service
 
 import com.alirezaiyan.subscriptionmanager.model.dto.SubscriptionTotalDto
-import com.alirezaiyan.subscriptionmanager.model.entity.Period
 import com.alirezaiyan.subscriptionmanager.model.entity.Subscription
 import com.alirezaiyan.subscriptionmanager.model.entity.User
 import com.alirezaiyan.subscriptionmanager.repository.SubscriptionRepository

@@ -2,7 +2,8 @@ package com.alirezaiyan.subscriptionmanager.model.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
-import java.time.LocalDate
+import org.springframework.data.jpa.domain.AbstractPersistable_.id
+
 
 @Entity
 @Table(name = "users")
@@ -23,6 +24,6 @@ data class User(
     val subscriptions: List<Subscription> = mutableListOf()
 ) {
     override fun toString(): String {
-        return "User(pid=$pid, userId=$userId, email=$email, name=$name, picture=$picture, subscriptionCount=${subscriptions.size})"
+        return "User{id=$id, name='$name'}"
     }
 }

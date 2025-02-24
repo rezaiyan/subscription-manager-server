@@ -1,39 +1,30 @@
 #!/bin/bash
 
-# Exit on first error
 set -e
 
 echo "🚀 Deploying and Running Subscription Manager..."
 
-# Check if .env file exists
 if [ ! -f .env ]; then
-    echo "⚠️ .env file not found! Ensure environment variables are set."
+    echo "⚠️  .env file not found! Please create one before deploying."
     exit 1
 fi
 
-# Load environment variables
-# shellcheck disable=SC2046
+echo "📦 Loading environment variables from .env..."
 export $(grep -v '^#' .env | xargs)
-echo "✅ Environment variables loaded from .env"
+echo "✅ Environment variables loaded."
 
-# Pull the latest Docker image (if using Docker Hub)
-echo "🔄 Pulling the latest Docker image..."
-docker pull mydockerhub/myapp:latest
-
-# Stop existing containers (if running)
-echo "🛑 Stopping existing containers..."
+echo "🧹 Stopping and cleaning up existing containers..."
 docker compose down || true
 
-# Build & Run new containers
-echo "🚀 Starting Docker Build & Containers..."
-if docker compose up --build -d; then
-    echo "✅ Application is running!"
+echo "🚀 Building and starting containers..."
+if docker compose up --build; then
+    echo "✅ Application is running."
 else
-    echo "❌ Deployment failed! Check logs above."
+    echo "❌ Failed to deploy. Please check the logs."
     exit 1
 fi
 
-# Show running containers
+echo "📦 Running containers:"
 docker ps
 
 echo "🎉 Deployment completed successfully!"
