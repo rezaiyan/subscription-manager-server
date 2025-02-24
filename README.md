@@ -12,7 +12,7 @@ It provides a secure **REST API** for managing user subscriptions, handling auth
 ✅ **Subscription Management (CRUD operations)**  
 ✅ **Calculate Total Monthly & Yearly Subscription Costs**  
 ✅ **Global Exception Handling for Better Error Responses**  
-✅ **Role-Based Access Control (Future Improvement)**  
+✅ **Role-Based Access Control (Future Improvement)**
 
 ---
 
@@ -50,21 +50,23 @@ cd subscription-manager
 ### **2️⃣ Set Up Environment Variables**
 Create a `.env` file and add your **Google OAuth Client ID** and **Database Credentials**:
 ```env
-GOOGLE_CLIENT_ID=your-google-client-id
-DATABASE_URL=jdbc:postgresql://localhost:5432/subscription_db
-DATABASE_USERNAME=your_db_user
-DATABASE_PASSWORD=your_db_password
+DATABASE_URL=--- //postgresql://localhost:5432/subscription_db
+DATABASE_NAME=---
+DATABASE_USERNAME=---
+DATABASE_PASSWORD=---
+
+GOOGLE_CLIENT_ID=---
+GOOGLE_CLIENT_SECRET=---
+GOOGLE_AUTHORIZATION_URI=---
+GOOGLE_TOKEN_URI=https://oauth2.googleapis.com/token
+GOOGLE_USER_INFO_URI=https://www.googleapis.com/oauth2/v3/userinfo
 ```
 
 ### **3️⃣ Run the Application**
 #### **With Gradle**
 ```bash
-./gradlew bootRun
-```
-
-#### **With Docker (Future)**
-```bash
-docker-compose up
+build_and_test.sh
+deploy_and_run.sh
 ```
 
 ---
@@ -122,7 +124,6 @@ curl -H "Authorization: Bearer <TOKEN>" http://localhost:8080/api/subscriptions
 - 🔐 **Enhance Security with Refresh Tokens**
 - 📊 **Add Subscription Statistics & Reports**
 - 🐳 **Docker & Kubernetes Deployment**
-- ✅ **GraphQL Support (Optional)**
 
 ---
 
