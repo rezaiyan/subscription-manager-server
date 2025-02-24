@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,10 +26,9 @@ jobs:
           echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> .env
           echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
           echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
-        shell: bash
 
-      - name: Make run.sh Executable
-        run: chmod +x run.sh
+      - name: Make Scripts Executable
+        run: chmod +x build_and_test.sh deploy_and_run.sh
 
-      - name: Run Build & Docker
-        run: ./run.sh
+      - name: Run Build & Test
+        run: ./build_and_test.sh
