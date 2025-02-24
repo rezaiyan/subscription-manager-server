@@ -35,20 +35,16 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-and-test
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Download JAR for Deployment
-        uses: actions/download-artifact@v4
-        with:
-          name: subscriptionmanager-jar
-          path: build/libs/
-
-      - name: Verify JAR Exists
-        run: ls -lah build/libs/
-
-      - name: Trigger Render Deployment
+      - name: Install Render CLI
         run: |
-          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys" \
-          -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-          -H "Content-Type: application/json"
+          curl -L https://github.com/render-oss/cli/releases/download/v1.1.0/cli_1.1.0_linux_amd64.zip -o render.zip
+          unzip render.zip
+          sudo mv cli_v1.1.0 /usr/local/bin/render
+
+      - name: Trigger deploy with Render CLI
+        env:
+          # The CLI can authenticate via a Render API key without logging in.
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          CI: true
+        run: |
+          render deploys create ${{ secrets.RENDER_SERVICE_ID }} --output json --confirm
