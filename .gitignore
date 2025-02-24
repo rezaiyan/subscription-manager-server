@@ -1,7 +1,6 @@
 # Ignore Gradle files
 .gradle
 build/
-!gradle/wrapper/gradle-wrapper.jar
 
 # Ignore generated files in src/
 !**/src/main/**/build/
