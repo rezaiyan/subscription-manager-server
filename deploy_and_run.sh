@@ -10,6 +10,7 @@ if [ ! -f .env ]; then
 fi
 
 echo "📦 Loading environment variables from .env..."
+# shellcheck disable=SC2046
 export $(grep -v '^#' .env | xargs)
 echo "✅ Environment variables loaded."
 
